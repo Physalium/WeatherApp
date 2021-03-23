@@ -49,7 +49,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 4. Create '.env' file in the root folder with the following content:
    ```JS
-   API_KEY='YOUR_API_KEY';
+   API_KEY='YOUR_API_KEY'
    ```
 
 
