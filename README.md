@@ -22,7 +22,7 @@
 An app that displays current weather data using OpenWeather Api.
 ### Built With
 
-*[OpenWeather API](https://openweathermap.org/api)
+* [OpenWeather API](https://openweathermap.org/api)
 * [React Native](https://reactnative.dev/m)
 * [Expo](https://expo.io/)
 
