@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 
-import { API_KEY } from './utils/constants';
+import { API_KEY } from '@env'
 
 import Weather from './components/Weather';
 
@@ -39,6 +39,8 @@ export default function App() {
   }
 
   useEffect(() => {
+
+    console.log(`api key ${API_KEY}`)
     navigator.geolocation.getCurrentPosition(
       position => {
         fetchWeather(position.coords.latitude, position.coords.longitude);
