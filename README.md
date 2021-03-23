@@ -47,9 +47,9 @@ To get a local copy up and running follow these simple example steps.
    ```sh
     yarn
    ```
-4. Enter your API in `constants.js`
+4. Create '.env' file in the root folder with the following content:
    ```JS
-   const API_KEY = 'ENTER YOUR API';
+   API_KEY='YOUR_API_KEY';
    ```
 
 
