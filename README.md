@@ -52,21 +52,6 @@ To get a local copy up and running follow these simple example steps.
    API_KEY='YOUR_API_KEY'
    ```
 
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
-
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
