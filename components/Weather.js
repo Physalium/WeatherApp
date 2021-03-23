@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getMonthName, getWeekName } from '../utils/utils';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
     const sunriseDate = convertUTCDateToLocalDate(new Date(sunrise))
     const sunsetDate = convertUTCDateToLocalDate(new Date(sunset))
     const [date, setDate] = useState(new Date(Date.now()))
+    const [city, setCity] = useState("Gliwice")
 
     useEffect(() => {
         setDate(convertUTCDateToLocalDate(new Date(Date.now())))
@@ -22,6 +23,19 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
                 { backgroundColor: weatherConditions[weather].color }
             ]}
         >
+            <View style={styles.cityContainer}>
+                <MaterialCommunityIcons
+                    size={47}
+                    name={'map-marker'}
+                    color={'#fff'}
+                />
+                <TextInput
+                    style={styles.cityTextInput}
+                    onChangeText={text => setCity(text)}
+                    value={city}
+                    maxLength={10}
+                />
+            </View>
             <View style={styles.headerContainer}>
                 <MaterialCommunityIcons
                     size={103}
@@ -69,7 +83,8 @@ Weather.propTypes = {
 
 const styles = StyleSheet.create({
     weatherContainer: {
-        flex: 1
+        flex: 1,
+        alignItems: 'center'
     },
     datetimeContainer: {
         flex: 0.5,
@@ -82,6 +97,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around'
+    },
+    cityContainer: {
+        alignItems: 'center',
+        width: 260,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 15,
+    },
+    cityTextInput: {
+        height: 40,
+        width: 220,
+        fontSize: 36,
+        color: 'white',
+        justifyContent: 'center'
     },
     tempText: {
         fontSize: 72,

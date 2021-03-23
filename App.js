@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 import { API_KEY } from '@env'
+import Constants from 'expo-constants';
 
 import Weather from './components/Weather';
-
+const statusBarHeight = Constants.statusBarHeight
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [temperature, setTemperature] = useState(0)
@@ -39,20 +40,15 @@ export default function App() {
   }
 
   useEffect(() => {
-
-    console.log(`api key ${API_KEY}`)
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        fetchWeather(position.coords.latitude, position.coords.longitude);
-      },
-      error => setError('Error Getting Weather Condtions')
-    );
+    fetchWeather();
   }, [])
 
   return (
-    <View style={styles.container}>
-      {isLoading ? <Text>Pobieranie danych pogodowych</Text> : <Weather weather={weatherCondition} temperature={temperature} sunrise={sunrise} sunset={sunset} humidity={humidity} pressure={pressure} wind={wind} />}
-    </View>
+    <SafeAreaView style={styles.container}>
+      {isLoading ? <Text style={
+        { alignContent: 'center' }
+      }>Pobieranie danych pogodowych</Text> : <Weather weather={weatherCondition} temperature={temperature} sunrise={sunrise} sunset={sunset} humidity={humidity} pressure={pressure} wind={wind} />}
+    </SafeAreaView>
   );
 
 }
@@ -60,6 +56,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    paddingTop: statusBarHeight
   }
 });
