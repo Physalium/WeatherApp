@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
     },
     headerContainer: {
-        flex: 0.5,
+        flex: 0.4,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around'
@@ -122,6 +122,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 15,
+        backgroundColor: 'rgba(20, 20, 20,0.9)',
+        borderRadius: 30,
+        padding: 10,
+        marginTop: 20
+        , marginBottom: 20
     },
     cityTextInput: {
         height: 40,
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     bodyContainer: {
-        flex: 1,
+        flex: 1.3,
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
