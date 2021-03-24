@@ -21,13 +21,12 @@ export default function App() {
 
 
   function fetchWeather(city = "Gliwice") {
-    console.log(`miasto: ${city}`)
     fetch(
       `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}&units=metric`
     )
       .then(res => res.json())
       .then(json => {
-        console.log("pobrano dane");
+        console.log(json);
         setSunrise(json.sys.sunrise * 1000)
         setSunset(json.sys.sunset * 1000)
         setTemperature(json.main.temp)

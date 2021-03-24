@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         justifyContent: 'space-evenly',
-        marginStart: 0,
+        marginStart: 4,
         marginEnd: 8,
     },
     valueContainer: {

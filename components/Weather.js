@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect, } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getMonthName, getWeekName } from '../utils/utils';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
     const sunsetDate = convertUTCDateToLocalDate(new Date(sunset))
     const [date, setDate] = useState(new Date(Date.now()))
     const [city, setCity] = useState("Gliwice")
+    const [elderMode, setElderMode] = useState(false)
     useEffect(() => {
         setDate(convertUTCDateToLocalDate(new Date(Date.now())))
 
@@ -36,7 +37,6 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
                 <TextInput
                     style={styles.cityTextInput}
                     onSubmitEditing={(event) => {
-                        console.log(`zmiana, wpisano ${event.nativeEvent.text}`)
                         setCity(event.nativeEvent.text)
                     }}
                     defaultValue="Gliwice"
@@ -65,6 +65,11 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
                 <WeatherAttr attribute="Humidity" value={humidity} />
             </View>
 
+            <TouchableOpacity
+                onPress={() => setElderMode(elderMode ? false : true)}
+                style={[styles.modeSwitchButton, { backgroundColor: 'white' }]}>
+                <Text style={{ fontSize: 25, color: 'black' }}>{elderMode ? "Wyłącz" : "Włącz"} tryb seniora</Text>
+            </TouchableOpacity>
 
         </View >
     );
@@ -92,6 +97,12 @@ const styles = StyleSheet.create({
     weatherContainer: {
         flex: 1,
         alignItems: 'center'
+    },
+    modeSwitchButton: {
+        width: '96%',
+        alignItems: 'center',
+        height: 38,
+        borderRadius: 10,
     },
     datetimeContainer: {
         flex: 0.5,
