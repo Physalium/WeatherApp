@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getMonthName, getWeekName } from '../utils/utils';
@@ -6,16 +6,20 @@ import PropTypes from 'prop-types';
 import { weatherConditions } from '../utils/WeatherConditions';
 import WeatherAttr from './WeatherAttr';
 
-const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressure }) => {
+const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressure, fetchWeather }) => {
     const sunriseDate = convertUTCDateToLocalDate(new Date(sunrise))
     const sunsetDate = convertUTCDateToLocalDate(new Date(sunset))
     const [date, setDate] = useState(new Date(Date.now()))
     const [city, setCity] = useState("Gliwice")
-
     useEffect(() => {
         setDate(convertUTCDateToLocalDate(new Date(Date.now())))
 
     }, [])
+
+
+    useEffect(() => {
+        fetchWeather(city)
+    }, [city])
     return (
         <View
             style={[
@@ -31,8 +35,11 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
                 />
                 <TextInput
                     style={styles.cityTextInput}
-                    onChangeText={text => setCity(text)}
-                    value={city}
+                    onSubmitEditing={(event) => {
+                        console.log(`zmiana, wpisano ${event.nativeEvent.text}`)
+                        setCity(event.nativeEvent.text)
+                    }}
+                    defaultValue="Gliwice"
                     maxLength={10}
                 />
             </View>
@@ -110,7 +117,7 @@ const styles = StyleSheet.create({
         width: 220,
         fontSize: 36,
         color: 'white',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     tempText: {
         fontSize: 72,

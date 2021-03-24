@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { API_KEY } from '@env'
 import Constants from 'expo-constants';
@@ -20,13 +20,14 @@ export default function App() {
 
 
 
-  function fetchWeather(lat = 50.29761, lon = 18.67658) {
+  function fetchWeather(city = "Gliwice") {
+    console.log(`miasto: ${city}`)
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}&units=metric`
     )
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        console.log("pobrano dane");
         setSunrise(json.sys.sunrise * 1000)
         setSunset(json.sys.sunset * 1000)
         setTemperature(json.main.temp)
@@ -36,7 +37,7 @@ export default function App() {
         setWeatherCondition(json.weather[0].main)
         setIsLoading(false)
 
-      });
+      }).catch(error => { alert("Nieprawidłowa nazwa") });
   }
 
   useEffect(() => {
@@ -44,11 +45,15 @@ export default function App() {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+
+
       {isLoading ? <Text style={
         { alignContent: 'center' }
-      }>Pobieranie danych pogodowych</Text> : <Weather weather={weatherCondition} temperature={temperature} sunrise={sunrise} sunset={sunset} humidity={humidity} pressure={pressure} wind={wind} />}
-    </SafeAreaView>
+      }>Pobieranie danych pogodowych</Text> : <Weather weather={weatherCondition} temperature={temperature} sunrise={sunrise} sunset={sunset} humidity={humidity} pressure={pressure} wind={wind}
+        fetchWeather={fetchWeather} />}
+
+    </View>
   );
 
 }
