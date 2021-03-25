@@ -11,11 +11,12 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
     const sunsetDate = convertUTCDateToLocalDate(new Date(sunset))
     const [date, setDate] = useState(new Date(Date.now()))
     const [city, setCity] = useState("Gliwice")
+    const [cityText, setCityText] = useState("Gliwice")
     const [elderMode, setElderMode] = useState(false)
     useEffect(() => {
         setDate(convertUTCDateToLocalDate(new Date(Date.now())))
 
-    }, [])
+    }, [city])
 
 
     useEffect(() => {
@@ -30,39 +31,45 @@ const Weather = ({ weather, temperature, sunset, sunrise, wind, humidity, pressu
         >
             <View style={styles.cityContainer}>
                 <MaterialCommunityIcons
-                    size={47}
+                    size={elderMode ? 53 : 47}
                     name={'map-marker'}
                     color={'#fff'}
                 />
                 <TextInput
-                    style={styles.cityTextInput}
+                    style={[styles.cityTextInput, { fontSize: elderMode ? 44 : 36, height: elderMode ? 60 : 40, width: elderMode ? 300 : 250, }]}
                     onSubmitEditing={(event) => {
                         setCity(event.nativeEvent.text)
                     }}
-                    defaultValue="Gliwice"
-                    maxLength={10}
+                    value={cityText}
+                    onChangeText={text => setCityText(text)}
+                    maxLength={12}
                 />
             </View>
             <View style={styles.headerContainer}>
                 <MaterialCommunityIcons
-                    size={103}
+                    size={elderMode ? 95 : 80}
                     name={weatherConditions[weather].icon}
                     color={'#fff'}
                 />
-                <Text style={styles.tempText}>{temperature}˚</Text>
+                <Text style={[styles.tempText, { marginLeft: 45, fontSize: elderMode ? 80 : 64 }]}>{temperature}˚</Text>
 
             </View>
             <View style={styles.datetimeContainer}>
-                <Text style={[styles.datetimeText, { fontSize: 40, fontWeight: '500' }]}>  {`${date.getHours()}:${(date.getUTCMinutes() < 10 ? '0' : '') + date.getUTCMinutes()}`}</Text>
-                <Text style={styles.datetimeText}>  {`${getWeekName(date.getUTCDay())}, ${date.getUTCDate()} ${getMonthName(date.getUTCMonth() + 1)}`}</Text>
+                <Text style={[styles.datetimeText, { fontSize: elderMode ? 55 : 40, fontWeight: '500' }]}>  {`${date.getHours()}:${(date.getUTCMinutes() < 10 ? '0' : '') + date.getUTCMinutes()}`}</Text>
+                <Text style={[styles.datetimeText, { fontSize: elderMode ? 30 : 24 }]}>  {`${getWeekName(date.getUTCDay())}, ${date.getUTCDate()} ${getMonthName(date.getUTCMonth() + 1)}`}</Text>
             </View>
-            <View style={styles.bodyContainer}>
-                <Text style={styles.title}>{weatherConditions[weather].title}</Text>
-                <WeatherAttr attribute="Sunrise" value={`${sunriseDate.getHours()}:${sunriseDate.getMinutes()}`} />
-                <WeatherAttr attribute="Sunset" value={`${sunsetDate.getHours()}:${sunsetDate.getMinutes()}`} />
-                <WeatherAttr attribute="Wind" value={wind} />
-                <WeatherAttr attribute="Pressure" value={pressure} />
-                <WeatherAttr attribute="Humidity" value={humidity} />
+            <View style={[styles.bodyContainer, elderMode ? { paddingLeft: 0, } : {}]}>
+                <Text style={[styles.title, elderMode ? { marginLeft: 4, fontSize: 56, } : {}]}>{weatherConditions[weather].title}</Text>
+                <WeatherAttr attribute="Sunrise" elderMode={elderMode}
+                    value={`${sunriseDate.getHours()}:${sunriseDate.getMinutes()}`} />
+                <WeatherAttr attribute="Sunset" elderMode={elderMode}
+                    value={`${sunsetDate.getHours()}:${sunsetDate.getMinutes()}`} />
+                <WeatherAttr attribute="Wind" elderMode={elderMode}
+                    value={wind} />
+                <WeatherAttr attribute="Pressure" elderMode={elderMode}
+                    value={pressure} />
+                <WeatherAttr attribute="Humidity" elderMode={elderMode}
+                    value={humidity} />
             </View>
 
             <TouchableOpacity
@@ -106,6 +113,7 @@ const styles = StyleSheet.create({
     },
     datetimeContainer: {
         flex: 0.5,
+        marginTop: 15,
         flexDirection: 'column',
         alignItems: 'center',
 
@@ -114,11 +122,12 @@ const styles = StyleSheet.create({
         flex: 0.4,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around'
+
+        justifyContent: 'space-evenly'
     },
     cityContainer: {
         alignItems: 'center',
-        width: 260,
+
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 15,
@@ -129,14 +138,14 @@ const styles = StyleSheet.create({
         , marginBottom: 20
     },
     cityTextInput: {
-        height: 40,
+
         width: 220,
-        fontSize: 36,
+
         color: 'white',
         justifyContent: 'center',
     },
     tempText: {
-        fontSize: 72,
+
         color: '#fff'
     },
     bodyContainer: {
@@ -144,15 +153,16 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
-        paddingLeft: 5,
+        paddingLeft: 15,
         marginBottom: 30
     },
     title: {
-        fontSize: 60,
-        color: '#fff'
+        fontSize: 53,
+        color: '#fff',
+        marginLeft: -6
     },
     datetimeText: {
-        fontSize: 24,
+
         color: '#fff'
     }
 });

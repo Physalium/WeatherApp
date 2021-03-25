@@ -3,34 +3,36 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { weatherAttributes } from '../utils/WeatherAttributes';
-export default function WeatherAttr({ attribute, value }) {
+export default function WeatherAttr({ attribute, value, elderMode }) {
 
     return (
-        <View style={styles.attrContainer}>
+        <View style={[styles.attrContainer, elderMode ? { marginLeft: 0, marginRight: 0 } : {}]}>
             <MaterialCommunityIcons
-                size={40}
+                size={elderMode ? 46 : 40}
                 name={weatherAttributes[attribute].icon}
                 color={'#fff'}
             />
             <View style={styles.titleContainer}>
-                <Text style={styles.attrTitle}>{weatherAttributes[attribute].title}</Text>
+                <Text style={elderMode ? styles.attrElderModeTitle : styles.attrTitle}>{weatherAttributes[attribute].title}</Text>
             </View>
             <View
                 style={{
                     flex: 0.1,
                 }} >
-                <View style={{
-                    height: 30,
-                    width: 3,
-                    alignContent: 'center',
-                    backgroundColor: 'white',
-                }} />
+                {elderMode ? null :
+                    <View style={{
+                        height: 27,
+                        width: 1.5,
+                        alignContent: 'center',
+                        backgroundColor: 'white',
+                    }} />
+                }
             </View>
-            <View style={styles.valueContainer}>
+            <View style={[styles.valueContainer, elderMode ? { flex: 0.52, marginLeft: -30, marginRight: -7 } : {}]}>
 
-                <Text style={styles.attrValue}>{value} {weatherAttributes[attribute].postfix}</Text>
+                <Text style={elderMode ? styles.attrElderModeValue : styles.attrValue}>{value} {weatherAttributes[attribute].postfix}</Text>
             </View>
-        </View>
+        </View >
     )
 
 
@@ -58,11 +60,20 @@ const styles = StyleSheet.create({
 
     },
     attrTitle: {
-        fontSize: 25,
+        fontSize: 24,
         color: '#fff'
     },
+    attrElderModeTitle: {
+        fontSize: 32,
+        color: '#fff',
+    },
     attrValue: {
-        fontSize: 25,
+        fontSize: 24,
+        color: '#fff',
+        marginEnd: 5
+    },
+    attrElderModeValue: {
+        fontSize: 32,
         color: '#fff',
         marginEnd: 5
     }
