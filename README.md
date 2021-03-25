@@ -41,7 +41,7 @@ To get a local copy up and running follow these simple example steps.
 1. Get a free API Key at [https://openweathermap.org/api](https://openweathermap.org/api)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/Physalium/WeatherApp
    ```
 3. Install yarn packages
    ```sh
